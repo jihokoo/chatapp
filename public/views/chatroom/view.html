@@ -1,0 +1,48 @@
+<section data-ng-controller="ChatroomController" data-ng-init="find()">
+  <h4 class="row">{{chatroom.title}}</h4>
+  <div class="col-md-3" style="height: 100%">
+    <label for="groups" class="col-md-2 control-label">Groups</label>
+    <div class="row clearfix">.</div>
+    <div class="row clearfix">.</div>
+    <div class="row clearfix">.</div>
+    <ul class="chatrooms unstyled">
+      <li data-ng-repeat="chatroom in chatrooms">
+        <h5><a data-ng-href="#!/chatroom/{{chatroom._id}}">{{chatroom.title}}</a></h5>
+        <!-- when clicked on switches the div -->
+      </li>
+    </ul>
+    <div class="row clearfix">.</div>
+    <div class="row clearfix">.</div>
+    <div class="row clearfix">.</div>
+    <div class="row clearfix">
+      <h5 data-ng-hide="!chatroom || chatroom.length">No chatrooms yet. <br> Why don't you <a href="/#!/chatroom/create">Create One</a>?</h5>
+    </div>
+  </div>
+  <div class="col-md-6 messages" data-ng-controller="MessagesController" data-ng-init="find()" style="height: 100%">
+    <label for="members" class="col-md-2 control-label">Chat Window</label>
+    <div class="row clearfix">.</div>
+    <div class="row clearfix">.</div>
+    <div class="row clearfix">.</div>
+    <div class="chatwindow row container">
+      <span data-ng-repeat="message in messages | orderBy:'-created':true">
+        {{message.creator.name+" : "+message.content+" "}}<br>{{message.created | date:'medium'}}<br><br>
+      </span>
+
+      <span data-ng-repeat="message in temporary_messages | orderBy:'$index':true">
+        {{message}}<br>
+      </span>
+
+
+      <!-- //date:'medium' -->
+
+    </div>
+    <form role="form" data-ng-submit="create_message()"><!-- have a function here that trigger on submit
+    and adds the chat to the window in real time -->
+      <label for="submit">Submit Message</label>
+      <input type="text" data-ng-model="content" id="submit">
+    </form>
+  </div>
+  <div class="col-md-3 members" style="height: 100%">
+    <label for="members" class="col-md-2 control-label">Members</label>
+  </div>
+</section>

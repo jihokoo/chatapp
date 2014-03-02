@@ -9,7 +9,13 @@ angular.module('mean.system').controller('HeaderController', ['$scope', 'Global'
     }, {
         'title': 'Create New Article',
         'link': 'articles/create'
+    }, {
+        'title': 'Chatrooms',
+        'link': 'chatroom'
+    }, {
+        'title': 'Create New Chatroom',
+        'link': 'chatroom/create'
     }];
-    
+
     $scope.isCollapsed = false;
 }]);

@@ -1,3 +1,6 @@
+<!-- SockJS WOOT WOOT! -->
+<script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+
 <!-- Angular JS -->
 <script type="text/javascript" src="/lib/angular/angular.min.js"></script>
 <script type="text/javascript" src="/lib/angular-cookies/angular-cookies.min.js"></script>
@@ -17,12 +20,24 @@
 <!-- Application Services -->
 <script type="text/javascript" src="/js/services/global.js"></script>
 <script type="text/javascript" src="/js/services/articles.js"></script>
+<script type="text/javascript" src="/js/services/chatroom.js"></script>
+<script type="text/javascript" src="/js/services/messages.js"></script>
 
 <!-- Application Controllers -->
 <script type="text/javascript" src="/js/controllers/articles.js"></script>
 <script type="text/javascript" src="/js/controllers/index.js"></script>
 <script type="text/javascript" src="/js/controllers/header.js"></script>
+<script type="text/javascript" src="/js/controllers/chatroom.js"></script>
+<script type="text/javascript" src="/js/controllers/messages.js"></script>
+
+<!-- Appication Directives -->
+<script type="text/javascript" src="/js/directives.js"></script>
+
+<!-- Initialize -->
 <script type="text/javascript" src="/js/init.js"></script>
+
+
+
 
 
 {% if (process.env.NODE_ENV == 'development') %}

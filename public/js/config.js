@@ -27,6 +27,22 @@ angular.module('mean').config(['$stateProvider', '$urlRouterProvider',
       .state('home', {
         url: '/',
         templateUrl: 'views/index.html'
+    })
+      .state('chatroom', {
+        url:'/chatroom',
+        templateUrl: 'views/chatroom/view.html'
+    })
+      .state('create chatroom', {
+        url:'/chatroom/create',
+        templateUrl: 'views/chatroom/create.html'
+    })
+      .state('chatroom by id', {
+        url:'/chatroom/:chatroomId',
+        templateUrl: 'views/chatroom/individual.html'
+    })
+      .state('edit chatroom', {
+        url:'/chatroom/:chatroomId/edit',
+        templateUrl: 'views/chatroom/edit.html'
     });
 }
 ]);

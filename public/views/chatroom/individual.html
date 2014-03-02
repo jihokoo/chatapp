@@ -1,0 +1,24 @@
+<section data-ng-controller="ChatroomController" data-ng-init="findOne()">
+  <div class="col-md-6 messages">
+    <span>{{chatroom.created | date:'medium'}}</span> /
+    <span>Created By: {{chatroom.creator['name']}}</span>
+    <h2>{{chatroom.title}}</h2>
+    <div data-ng-show="global.user._id == chatroom.creator._id">
+        <a class="btn" href="/#!/chatroom/{{chatroom._id}}/edit">
+          <i class="glyphicon glyphicon-edit"></i>
+        </a>
+        <a class="btn" data-ng-click="remove();">
+            <i class="glyphicon glyphicon-trash"></i>
+        </a>
+    </div>
+    <div class="row clearfix">.</div>
+    <div class="row clearfix">.</div>
+    <div class="row clearfix">.</div>
+    <div class="chatwindow row container"></div>
+  </div>
+  <div class="col-md-3 members">
+    <label for="members" class="col-md-2 control-label">Members</label>
+  </div>
+</section>
+
+
