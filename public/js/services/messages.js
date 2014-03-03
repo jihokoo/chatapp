@@ -5,8 +5,9 @@ angular.module('chatapp.services.messages', []).factory('Message', ['$resource',
     return $resource('message/:messageId', {
         messageId: '@_id'
     }, {
-        update: {
+        search: {
             method: 'PUT'
         }
     });
-}]);
+  }]);
+

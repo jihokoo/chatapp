@@ -84,7 +84,16 @@ exports.destroy = function(req, res) {
  * Show an chatroom
  */
 exports.show = function(req, res) {
-    res.jsonp(req.chatroom);
+    console.log(req.chatroom)
+    Chatroom.findOne({_id: req.chatroom._id}).populate('members', 'name').exec(function(err, chatroom){
+        if (err) {
+            res.render('error', {
+                status: 500
+            });
+        } else {
+            res.jsonp(chatroom);
+        }
+    })
 };
 
 /**

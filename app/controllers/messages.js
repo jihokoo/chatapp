@@ -5,6 +5,7 @@
  */
 var mongoose = require('mongoose'),
     Message = mongoose.model('Message'),
+    Chatroom = mongoose.model('Chatroom'),
     _ = require('lodash');
 
 
@@ -24,7 +25,7 @@ exports.message = function(req, res, next, id) {
  * Create an message
  */
 exports.create = function(req, res) {
-    var message = new Message(req.body);
+    var message = new Message({content: req.body.content, username: req.body.username});
     message.creator = req.user;
     message.save(function(err) {
         if (err) {
@@ -33,9 +34,15 @@ exports.create = function(req, res) {
                 message: message
             });
         } else {
-            Message.load(message._id, function(err, message){
-                res.jsonp(message);
-            })
+            console.log("hello")
+            //need to get chatroom somehow
+            Chatroom.findOne({_id: req.body.chatroomId}, function(err, chatroom){
+                Message.load(message._id, function(err, message){
+                    chatroom.messages.push(message);
+                    chatroom.save();
+                    res.jsonp(message);
+                });
+            });
         }
     });
 };
@@ -89,13 +96,13 @@ exports.show = function(req, res) {
  * List of messages
  */
 exports.all = function(req, res) {
-    Message.find().sort('-created').populate('creator', 'name username').exec(function(err, messages) {
+    Chatroom.findOne({_id: req.body.chatroomId}, function(err, chatroom){
         if (err) {
             res.render('error', {
                 status: 500
             });
         } else {
-            res.jsonp(messages);
+            res.jsonp({message: chatroom.messages});
         }
     });
 };

@@ -3,18 +3,16 @@ angular.module('chatapp.controllers.messages', []).controller('MessagesControlle
     $scope.global = Global;
 
     var sock = new SockJS('/echo');
-
     $scope.temporary_messages = [];
 
-    var print = function(a, b, c) {
-        return b+" : "+c+" "+a
-    };
 
-    $scope.create_message = function() {
+    $scope.create_message = function(chatroomId) {
         var message = new Message({
-            content: this.content
+            content: this.content,
+            chatroomId: chatroomId,
+            username: window.user.name
         });
-
+        console.log(chatroomId)
         message.$save(function(response){
             console.log(response)
             sock.send([response.created, response.creator.name, response.content])
@@ -23,12 +21,15 @@ angular.module('chatapp.controllers.messages', []).controller('MessagesControlle
         this.content = '';
     };
 
+//s
+
+
     sock.onopen = function() {
         console.log('open');
     };
 
     sock.onmessage = function(e) {
-        $scope.temporary_messages.push(print(e.data.split(",")[0], e.data.split(",")[1], e.data.split(",")[2]))
+        $scope.temporary_messages.push(e.data.split(","))
         $scope.$apply();
     };
 
@@ -36,9 +37,12 @@ angular.module('chatapp.controllers.messages', []).controller('MessagesControlle
         console.log('sockjs close');
     };
 
-    $scope.find = function() {
-        Message.query(function(messages) {
-            $scope.messages = messages;
+    $scope.finds = function() {
+        var message = new Message({
+            chatroomId: $stateParams.chatroomId
+        })
+        message.$search(function(messages) {
+            $scope.messages = messages["message"];
         });
     };
 }]);

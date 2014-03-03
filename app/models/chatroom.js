@@ -28,13 +28,11 @@ var ChatroomSchema = new Schema({
         type: Schema.ObjectId,
         ref: 'User'
     },
-    members: {
-        type: [Schema.ObjectId],
+    members: [{
+        type: Schema.ObjectId,
         ref: 'User'
-    },
-    messages: {
-        type: [Schema.ObjectId]
-    }
+    }],
+    messages: Array
 });
 
 /**

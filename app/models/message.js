@@ -21,6 +21,10 @@ var MessageSchema = new Schema({
     creator: {
         type: Schema.ObjectId,
         ref: 'User'
+    },
+    username: {
+        type: String,
+        required: true
     }
     //maybe there is a need for storing the recievers of the message
     //but not for now
@@ -41,5 +45,8 @@ MessageSchema.statics.load = function(id, cb) {
         _id: id
     }).populate('creator', 'name username').exec(cb);
 };
+
+
+
 
 mongoose.model('Message', MessageSchema);

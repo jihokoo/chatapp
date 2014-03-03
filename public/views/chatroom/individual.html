@@ -1,23 +1,56 @@
 <section data-ng-controller="ChatroomController" data-ng-init="findOne()">
-  <div class="col-md-6 messages">
-    <span>{{chatroom.created | date:'medium'}}</span> /
-    <span>Created By: {{chatroom.creator['name']}}</span>
-    <h2>{{chatroom.title}}</h2>
-    <div data-ng-show="global.user._id == chatroom.creator._id">
-        <a class="btn" href="/#!/chatroom/{{chatroom._id}}/edit">
-          <i class="glyphicon glyphicon-edit"></i>
-        </a>
-        <a class="btn" data-ng-click="remove();">
-            <i class="glyphicon glyphicon-trash"></i>
-        </a>
-    </div>
-    <div class="row clearfix">.</div>
-    <div class="row clearfix">.</div>
-    <div class="row clearfix">.</div>
-    <div class="chatwindow row container"></div>
+  <span>{{chatroom.created | date:'medium'}}</span> /
+  <span>Created By: {{chatroom.creator['name']}}</span>
+  <h2>{{chatroom.title}}</h2>
+  <div data-ng-show="global.user._id == chatroom.creator._id">
+    <a class="btn" href="/#!/chatroom/{{chatroom._id}}/edit">
+      <i class="glyphicon glyphicon-edit"></i>
+    </a>
+    <a class="btn" data-ng-click="remove();">
+        <i class="glyphicon glyphicon-trash"></i>
+    </a>
   </div>
-  <div class="col-md-3 members">
-    <label for="members" class="col-md-2 control-label">Members</label>
+  <div class="col-md-3" style="height: 100%" data-ng-init="find()">
+    <label for="groups" class="col-md-2 control-label">Groups</label>
+    <div class="row clearfix">.</div>
+    <div class="row clearfix">.</div>
+    <div class="row clearfix">.</div>
+    <ul class="chatrooms unstyled">
+      <li data-ng-repeat="chatroom in chatrooms">
+        <h5><a data-ng-href="#!/chatroom/{{chatroom._id}}">{{chatroom.title}}</a></h5>
+      </li>
+    </ul>
+    <div class="row clearfix">.</div>
+    <div class="row clearfix">.</div>
+    <div class="row clearfix">.</div>
+    <div class="row clearfix">
+      <h5 data-ng-hide="!chatrooms || chatrooms.length">No chatrooms yet. <br> Why don't you <a href="/#!/chatroom/create">Create One</a>?</h5>
+    </div>
+  </div>
+  <div class="col-md-6 messages" data-ng-controller="MessagesController" data-ng-init="finds()" style="height: 100%">
+    <label for="members" class="col-md-2 control-label">Chat Window</label>
+    <div class="row clearfix">.</div>
+    <div class="row clearfix">.</div>
+    <div class="row clearfix">.</div>
+    <div class="chatwindow row container">
+      <span data-ng-repeat="message in messages | orderBy:'-created':true">
+        {{message.username+" : "+message.content+" "}}<br>{{message.created | date:'medium'}}<br><br>
+      </span>
+
+      <span data-ng-repeat="message in temporary_messages | orderBy:'$index':true">
+        {{message[1]+" : "+message[2]+" "}}<br>{{message[0] | date:'medium'}}<br><br>
+      </span>
+    </div>
+    <form role="form" data-ng-submit="create_message(chatroom._id)">
+      <label for="submit">Submit Message</label>
+      <input type="text" data-ng-model="content" id="submit">
+    </form>
+  </div>
+  <div class="col-md-3 members" style="height: 100%">
+    <label for="members" class="col-md-2 control-label">Members</label><br>
+    <span data-ng-repeat="member in members | orderBy:'-created':true">
+        {{member.name}}<br><br>
+      </span>
   </div>
 </section>
 

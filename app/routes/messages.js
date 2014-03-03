@@ -17,7 +17,7 @@ module.exports = function(app) {
     app.get('/message', messages.all);
     app.post('/message', authorization.requiresLogin, messages.create);
     app.get('/message/:messageId', messages.show);
-    app.put('/message/:messageId', authorization.requiresLogin, hasAuthorization, messages.update);
+    app.put('/message', messages.all);
     app.del('/message/:messageId', authorization.requiresLogin, hasAuthorization, messages.destroy);
 
     // Finish with setting up the messageId param

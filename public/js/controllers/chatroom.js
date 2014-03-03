@@ -89,6 +89,8 @@ angular.module('chatapp.controllers.chatrooms', []).controller('ChatroomControll
             chatroomId: $stateParams.chatroomId
         }, function(chatroom) {
             $scope.chatroom = chatroom;
+            $scope.members = chatroom.members;
+            console.log(chatroom.members)
             console.log($scope.chatroom.creator.name);
         });
     };
