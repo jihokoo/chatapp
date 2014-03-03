@@ -32,7 +32,10 @@ var ChatroomSchema = new Schema({
         type: Schema.ObjectId,
         ref: 'User'
     }],
-    messages: Array
+    messages: [{
+        type: Schema.ObjectId,
+        ref: 'Message'
+    }]
 });
 
 /**

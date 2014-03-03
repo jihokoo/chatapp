@@ -42,6 +42,7 @@ angular.module('chatapp.controllers.messages', []).controller('MessagesControlle
             chatroomId: $stateParams.chatroomId
         })
         message.$search(function(messages) {
+            console.log(messages)
             $scope.messages = messages["message"];
         });
     };

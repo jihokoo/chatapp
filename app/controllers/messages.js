@@ -96,12 +96,13 @@ exports.show = function(req, res) {
  * List of messages
  */
 exports.all = function(req, res) {
-    Chatroom.findOne({_id: req.body.chatroomId}, function(err, chatroom){
+    Chatroom.findOne({_id: req.body.chatroomId}).populate('messages', 'username created content').exec(function(err, chatroom){
         if (err) {
             res.render('error', {
                 status: 500
             });
         } else {
+            console.log("hello")
             res.jsonp({message: chatroom.messages});
         }
     });

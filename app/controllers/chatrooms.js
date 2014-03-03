@@ -85,7 +85,7 @@ exports.destroy = function(req, res) {
  */
 exports.show = function(req, res) {
     console.log(req.chatroom)
-    Chatroom.findOne({_id: req.chatroom._id}).populate('members', 'name').exec(function(err, chatroom){
+    Chatroom.findOne({_id: req.chatroom._id}).populate('members', 'name').populate('creator', 'name').exec(function(err, chatroom){
         if (err) {
             res.render('error', {
                 status: 500

@@ -101,3 +101,14 @@ exports.user = function(req, res, next, id) {
             next();
         });
 };
+
+exports.all = function(req, res){
+    User.find(function(err, users){
+        res.jsonp(users);
+    })
+}
+
+
+
+
+

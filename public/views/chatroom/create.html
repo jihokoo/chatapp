@@ -10,6 +10,13 @@
         <input type="text" class="form-control" data-ng-model="mission" id="mission" placeholder="Mission" required>
       </div>
     </div>
+    <div data-ng-controller="UserController" data-ng-init="find()" class="form-group">
+      <label for="members" class="col-md-2 control-label">Members</label>
+      <div class="col-md-10">
+        <input type="text" data-ng-model="members" typeahead="user.name for user in users | filter: $viewValue | limitTo: 10" class="form-control" placeholder="Enter a friends name, username, or email!">
+        <input type="text" data-ng-model="members" ui-select2 = "select2Options">
+      </div>
+    </div>
     <div class="form-group">
       <div class="col-md-offset-2 col-md-10">
         <button type="submit" class="btn btn-default">Submit</button>
