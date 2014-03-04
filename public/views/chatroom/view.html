@@ -5,10 +5,10 @@
     <div class="row clearfix">.</div>
     <div class="row clearfix">.</div>
     <ul class="chatrooms unstyled">
-      <li data-ng-repeat="chatroom in chatrooms">
-        <h5><a data-ng-href="#!/chatroom/{{chatroom._id}}">{{chatroom.title}}</a></h5>
+      <span data-ng-repeat="chatroom in chatrooms" data-ng-show="checkMember(chatroom)">
+        <h5><a data-ng-href="#!/chatroom/{{chatroom._id}}" >{{chatroom.title}}</a></h5>
         <!-- when clicked on switches the div -->
-      </li>
+      </span>
     </ul>
     <div class="row clearfix">.</div>
     <div class="row clearfix">.</div>

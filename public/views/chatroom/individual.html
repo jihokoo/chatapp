@@ -16,9 +16,9 @@
     <div class="row clearfix">.</div>
     <div class="row clearfix">.</div>
     <ul class="chatrooms unstyled">
-      <li data-ng-repeat="chatroom in chatrooms">
-        <h5><a data-ng-href="#!/chatroom/{{chatroom._id}}">{{chatroom.title}}</a></h5>
-      </li>
+      <spans data-ng-repeat="chatroom in chatrooms" data-ng-show="checkMember(chatroom)" >
+        <h5><a data-ng-href="#!/chatroom/{{chatroom._id}}" >{{chatroom.title}}</a></h5>
+      </spans>
     </ul>
     <div class="row clearfix">.</div>
     <div class="row clearfix">.</div>
@@ -47,7 +47,7 @@
     </form>
   </div>
   <div class="col-md-3 members" style="height: 100%">
-    <label for="members" class="col-md-2 control-label">Members</label><br>
+    <label for="members" class="col-md-2 control-label">Members</label><br><br>
     <span data-ng-repeat="member in members | orderBy:'-created':true">
         {{member.name}}<br><br>
       </span>

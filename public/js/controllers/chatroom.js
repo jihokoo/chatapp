@@ -1,11 +1,12 @@
 'use strict';
-angular.module('chatapp.controllers.chatrooms', []).controller('ChatroomController', ['$scope', '$stateParams', '$location', 'Global', 'Chatroom', function ($scope, $stateParams, $location, Global, Chatroom) {
+angular.module('chatapp.controllers.chatrooms', []).controller('ChatroomController', ['$scope', '$stateParams', '$location', 'Global', 'Chatroom', 'User', function ($scope, $stateParams, $location, Global, Chatroom, User) {
     $scope.global = Global;
 
     $scope.create_chatroom = function() {
         var chatroom = new Chatroom({
             title: this.title,
-            mission: this.mission
+            mission: this.mission,
+            members: this.members
         });
         chatroom.$save(function(response){
             $location.path('chatroom/' + response._id);
@@ -19,8 +20,16 @@ angular.module('chatapp.controllers.chatrooms', []).controller('ChatroomControll
         this.mission = '';
     };
 
-
-
+    $scope.findUser = function() {
+        User.query(function(users){
+            $scope.users = users
+            $scope.select2Options = {
+                multiple: true,
+                simple_tags: true,
+                tags: ["hello","watsup"]
+            }
+        });
+    };
 
 // where do i want to go from here
 
@@ -94,5 +103,11 @@ angular.module('chatapp.controllers.chatrooms', []).controller('ChatroomControll
             console.log($scope.chatroom.creator.name);
         });
     };
+
+    $scope.checkMember = function(chatroom){
+        console.log(chatroom.members.indexOf($scope.global.user._id));
+        console.log(chatroom.members.indexOf($scope.global.user._id) != -1 && true)
+        return chatroom.members.indexOf($scope.global.user._id) != -1 && true
+    }
     //this will be useful for finding someone specific through input
 }]);

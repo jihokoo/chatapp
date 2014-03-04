@@ -26,8 +26,6 @@ exports.chatroom = function(req, res, next, id) {
 exports.create = function(req, res) {
     var chatroom = new Chatroom(req.body);
     chatroom.creator = req.user;
-    console.log(req.user);
-    console.log(chatroom.creator);
     chatroom.members.push(req.user);
     console.log('backend controller');
     chatroom.save(function(err) {
