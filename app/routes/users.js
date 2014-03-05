@@ -16,6 +16,8 @@ module.exports = function(app, passport) {
 
     app.get('/user', users.all);
 
+    app.put('/user/:userId', users.destroy);
+
     // Setting up the userId param
     app.param('userId', users.user);
 

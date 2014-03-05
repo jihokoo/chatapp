@@ -1,12 +1,12 @@
 <section data-ng-controller="ChatroomController" data-ng-init="findOne()">
+  <h2>{{chatroom.title}}</h2>
   <span>{{chatroom.created | date:'medium'}}</span> /
   <span>Created By: {{chatroom.creator['name']}}</span>
-  <h2>{{chatroom.title}}</h2>
-  <div data-ng-show="global.user._id == chatroom.creator._id">
-    <a class="btn" href="/#!/chatroom/{{chatroom._id}}/edit">
+  <div>
+    <a class="btn" href="/#!/chatroom/{{chatroom._id}}/edit" data-ng-show="global.user._id == chatroom.creator._id">
       <i class="glyphicon glyphicon-edit"></i>
     </a>
-    <a class="btn" data-ng-click="remove();">
+    <a class="btn" data-ng-click="remove();" data-ng-show="global.user._id == chatroom.creator._id">
         <i class="glyphicon glyphicon-trash"></i>
     </a>
   </div>
@@ -37,7 +37,7 @@
         {{message.username+" : "+message.content+" "}}<br>{{message.created | date:'medium'}}<br><br>
       </span>
 
-      <span data-ng-repeat="message in temporary_messages | orderBy:'$index':true">
+      <span data-ng-repeat="message in temporary_messages | orderBy:'$index':true" data-ng-show="chatroom._id === message[3]">
         {{message[1]+" : "+message[2]+" "}}<br>{{message[0] | date:'medium'}}<br><br>
       </span>
     </div>

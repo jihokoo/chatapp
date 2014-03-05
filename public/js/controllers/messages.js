@@ -15,7 +15,7 @@ angular.module('chatapp.controllers.messages', []).controller('MessagesControlle
         console.log(chatroomId)
         message.$save(function(response){
             console.log(response)
-            sock.send([response.created, response.creator.name, response.content])
+            sock.send([response.created, response.creator.name, response.content, chatroomId])
         });
 
         this.content = '';
@@ -29,6 +29,7 @@ angular.module('chatapp.controllers.messages', []).controller('MessagesControlle
     };
 
     sock.onmessage = function(e) {
+        console.log(e)
         $scope.temporary_messages.push(e.data.split(","))
         $scope.$apply();
     };

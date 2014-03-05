@@ -2,6 +2,9 @@
 angular.module('chatapp.controllers.chatrooms', []).controller('ChatroomController', ['$scope', '$stateParams', '$location', 'Global', 'Chatroom', 'User', function ($scope, $stateParams, $location, Global, Chatroom, User) {
     $scope.global = Global;
 
+    var socks = new SockJS('/echo');
+
+
     $scope.create_chatroom = function() {
         var chatroom = new Chatroom({
             title: this.title,
@@ -53,7 +56,31 @@ angular.module('chatapp.controllers.chatrooms', []).controller('ChatroomControll
 // we display them in a list, when list is generated next to the button
 // should be a edit or remove button, this will take us to a form
 
+    // $scope.temporary_members = [];
+    $scope.removeUser = function(user) {
+        if (user) {
+            console.log(user);
+            var userRemove = new User(user);
+            userRemove.chatroomId = $scope.chatroom._id
+            userRemove.$search(function(members){
+                $scope.temporary_members = members.members;
+                socks.send('$scope.temporary_members');
+            });
+        }
+        else {
+            console.log("errors on errors on errors")
+            // $scope.user.$remove();
+            // $location.path('user');
+        }
+    };
 
+    $scope.membersObject = {}
+    socks.onmessage = function(e) {
+        $scope.members = eval("("+e.data+")");
+        console.log($scope.members)
+        // $scope.temporary_members = [{name: "hello"}, {name: "hello"}, {name: "hello"}]
+        $scope.$apply();
+    };
 
     $scope.remove = function(chatroom) {
         if (chatroom) {
@@ -99,8 +126,8 @@ angular.module('chatapp.controllers.chatrooms', []).controller('ChatroomControll
         }, function(chatroom) {
             $scope.chatroom = chatroom;
             $scope.members = chatroom.members;
-            console.log(chatroom.members)
-            console.log($scope.chatroom.creator.name);
+            console.log(chatroom.members);
+            console.log($scope.chatroom.creator);
         });
     };
 
@@ -111,3 +138,15 @@ angular.module('chatapp.controllers.chatrooms', []).controller('ChatroomControll
     }
     //this will be useful for finding someone specific through input
 }]);
+
+
+
+
+
+
+
+
+
+
+
+

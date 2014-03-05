@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+    Chatroom = mongoose.model('Chatroom'),
     User = mongoose.model('User');
 
 /**
@@ -106,7 +107,23 @@ exports.all = function(req, res){
     User.find(function(err, users){
         res.jsonp(users);
     })
-}
+};
+
+exports.destroy = function(req, res) {
+    Chatroom.findOne({_id: req.body.chatroomId}, function(err, chatroom){
+        var index = chatroom.members.indexOf(req.body._id);
+        console.log(chatroom.members);
+        chatroom.members.splice(index, 1);
+        console.log(chatroom.members);
+        chatroom.save(function(err){
+            Chatroom.findOne({_id: chatroom._id}).populate('members').populate('creator').exec(function(err, chatroom){
+                console.log(chatroom.members)
+                res.jsonp({members: chatroom.members});
+            });
+        });
+
+    });
+};
 
 
 
