@@ -27,11 +27,23 @@ module.exports = function(app, passport) {
         failureFlash: true
     }), users.session);
 
+
+    app.get('/auth/venmo', passport.authenticate('venmo', {
+        scope: ['make_payments', 'access_feed', 'access_profile', 'access_email', 'access_phone', 'access_balance', 'access_friends'],
+        failureRedirect: '/signin'
+    }), users.signin);
+
+    app.get('/auth/venmo/callback', passport.authenticate('venmo', {
+        failureRedirect: '/signin'
+    }), users.authCallback);
+
+
+
     // Setting the facebook oauth routes
     app.get('/auth/facebook', passport.authenticate('facebook', {
         scope: ['email', 'user_about_me'],
         failureRedirect: '/signin'
-    }), users.signin);
+    }), users.authCallback);
 
     app.get('/auth/facebook/callback', passport.authenticate('facebook', {
         failureRedirect: '/signin'

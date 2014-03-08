@@ -6,7 +6,7 @@ angular.module('mean.articless', []).controller('ArticlesController', ['$scope',
     $scope.create = function() {
         var article = new Articles({
             title: this.title,
-            content: this.content
+            content: this.content,
         });
         article.$save(function(response) {
             $location.path('articles/' + response._id);

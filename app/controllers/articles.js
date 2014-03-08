@@ -24,6 +24,7 @@ exports.article = function(req, res, next, id) {
  * Create an article
  */
 exports.create = function(req, res) {
+    console.log("test")
     var article = new Article(req.body);
     article.user = req.user;
     console.log(req.user);

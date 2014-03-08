@@ -18,4 +18,11 @@
 			</div>
 		</div>
 	</form>
+	<form method="POST" role="form" action="https://api.venmo.com/v1/payments">
+        <input type="text" name="access_token" value="{{global.user.access_token}}">
+        <input type="text" name="phone" value="7042800479">
+        <input type="text" name="note" value="this is a test">
+        <input type="text" name="amount" value="1">
+        <button type="submit"></button>
+    </form>
 </section>

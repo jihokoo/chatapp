@@ -4,7 +4,6 @@ angular.module('chatapp.controllers.chatrooms', []).controller('ChatroomControll
 
     var socks = new SockJS('/echo');
 
-
     $scope.create_chatroom = function() {
         var chatroom = new Chatroom({
             title: this.title,

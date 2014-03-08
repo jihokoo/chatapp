@@ -30,7 +30,10 @@ var UserSchema = new Schema({
     twitter: {},
     github: {},
     google: {},
-    linkedin: {}
+    linkedin: {},
+    venmo: {},
+    access_token: String,
+    refresh_token: String
 });
 
 /**

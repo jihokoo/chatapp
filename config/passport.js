@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
     GitHubStrategy = require('passport-github').Strategy,
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
     LinkedinStrategy = require('passport-linkedin').Strategy,
+    VenmoStrategy = require('passport-venmo').Strategy,
     User = mongoose.model('User'),
     config = require('./config');
 
@@ -84,6 +85,45 @@ module.exports = function(passport) {
             });
         }
     ));
+
+    // Use venmo strategy
+    passport.use(new VenmoStrategy({
+            clientID: config.venmo.clientID,
+            clientSecret: config.venmo.clientSecret,
+            callbackURL: config.venmo.callbackURL
+        },
+        function(accessToken, refreshToken, venmo, done) {
+            User.findOne({
+                'venmo.id': venmo.id
+            }, function(err, user) {
+                if (err) {
+                    return done(err);
+                }
+                if (!user) {
+                    user = new User({
+                        name: venmo.displayName,
+                        username: venmo.username,
+                        email: venmo.email,
+                        provider: 'venmo',
+                        venmo: venmo._json,
+                        balance: venmo.balance,
+                        access_token: accessToken,
+                        refresh_token: refreshToken
+                    });
+                    user.save(function(err) {
+                        if (err) console.log(err);
+                        return done(err, user);
+                    });
+                } else {
+                    user.balance = venmo.balance;
+                    user.access_token = accessToken;
+                    user.save();
+                    return done(err, user);
+                }
+            });
+        }
+    ));
+
 
     // Use facebook strategy
     passport.use(new FacebookStrategy({
@@ -204,3 +244,7 @@ module.exports = function(passport) {
         }
     ));
 };
+
+
+
+// F3ybz3PbhR6fDQeHhFMKA8UT7ryhSqZD

@@ -61,7 +61,8 @@
     "swig": "~1.3.2",
     "sockjs": "~0.3.8",
     "rbytes": "~1.0.0",
-    "node-static": "~0.7.3"
+    "node-static": "~0.7.3",
+    "venmo": "0.0.2"
   },
   "devDependencies": {
     "supertest": "0.8.2",
