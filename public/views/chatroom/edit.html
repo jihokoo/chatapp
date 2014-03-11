@@ -19,8 +19,8 @@
     </div>
     <div class="col-md-3 members" style="height: 100%">
     <label for="members" class="col-md-2 control-label">Members</label><br><br>
-    <span data-ng-repeat="member in members | orderBy:'-created':true" data-ng-show="global.user._id != member._id">
-        <a class="btn" data-ng-click="removeUser(member)">
+    <span data-ng-repeat="member in membersByChatroom[chatroom._id] | orderBy:'-created':true" data-ng-show="global.user._id != member._id">
+        <a class="btn" data-ng-click="removeUser(member, chatroom._id)">
           <i class="glyphicon glyphicon-trash"></i>
         </a>
         {{member.name}}<br><br>

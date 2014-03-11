@@ -86,42 +86,46 @@ module.exports = function(passport) {
         }
     ));
 
-    // Use venmo strategy
+    // Use Venmo Strategy
     passport.use(new VenmoStrategy({
-            clientID: config.venmo.clientID,
-            clientSecret: config.venmo.clientSecret,
-            callbackURL: config.venmo.callbackURL
-        },
-        function(accessToken, refreshToken, venmo, done) {
-            User.findOne({
-                'venmo.id': venmo.id
-            }, function(err, user) {
-                if (err) {
-                    return done(err);
-                }
-                if (!user) {
-                    user = new User({
-                        name: venmo.displayName,
-                        username: venmo.username,
-                        email: venmo.email,
-                        provider: 'venmo',
-                        venmo: venmo._json,
-                        balance: venmo.balance,
-                        access_token: accessToken,
-                        refresh_token: refreshToken
-                    });
-                    user.save(function(err) {
-                        if (err) console.log(err);
-                        return done(err, user);
-                    });
-                } else {
-                    user.balance = venmo.balance;
-                    user.access_token = accessToken;
-                    user.save();
+        clientID: config.venmo.clientID,
+        clientSecret: config.venmo.clientSecret,
+        callbackURL: config.venmo.callbackURL
+      },
+      function(accessToken, refreshToken, venmo, done) {
+        User.findOne({
+            'venmo.id': venmo.id
+        }, function(err, user) {
+            if (err) {
+                return done(err);
+            }
+            // checks if the user has been already been created, if not
+            // we create a new instance of the User model
+            if (!user) {
+                user = new User({
+                    name: venmo.displayName,
+                    username: venmo.username,
+                    email: venmo.email,
+                    provider: 'venmo',
+                    venmo: venmo._json,
+                    balance: venmo.balance,
+                    access_token: accessToken,
+                    refresh_token: refreshToken
+                });
+                user.save(function(err) {
+                    if (err) console.log(err);
                     return done(err, user);
-                }
-            });
-        }
+                });
+            } else {
+                user.balance = venmo.balance;
+                user.access_token = accessToken;
+                user.venmo = venmo._json;
+                user.save(function(err){
+                    return done(err, user);
+                });
+            }
+        });
+      }
     ));
 
 

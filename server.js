@@ -88,6 +88,9 @@ walk(routes_path);
 
 var connections = [];
 
+// passport that has views
+// a package that used passport but included views and validations
+// devise on rails
 
 
 

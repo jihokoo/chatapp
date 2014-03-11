@@ -33,6 +33,8 @@ angular.module('chatapp.controllers.chatrooms', []).controller('ChatroomControll
         });
     };
 
+    $scope.membersByChatroom = {};
+
 // where do i want to go from here
 
 // i need render a view page that will show
@@ -56,14 +58,15 @@ angular.module('chatapp.controllers.chatrooms', []).controller('ChatroomControll
 // should be a edit or remove button, this will take us to a form
 
     // $scope.temporary_members = [];
-    $scope.removeUser = function(user) {
+    $scope.removeUser = function(user, chatroomId) {
         if (user) {
             console.log(user);
+            console.log(chatroomId);
             var userRemove = new User(user);
-            userRemove.chatroomId = $scope.chatroom._id
+            userRemove.chatroomId = chatroomId;
             userRemove.$search(function(members){
                 $scope.temporary_members = members.members;
-                socks.send('$scope.temporary_members');
+                socks.send(["$scope.temporary_members", chatroomId]);
             });
         }
         else {
@@ -73,12 +76,15 @@ angular.module('chatapp.controllers.chatrooms', []).controller('ChatroomControll
         }
     };
 
-    $scope.membersObject = {}
     socks.onmessage = function(e) {
-        $scope.members = eval("("+e.data+")");
-        console.log($scope.members)
-        // $scope.temporary_members = [{name: "hello"}, {name: "hello"}, {name: "hello"}]
-        $scope.$apply();
+        console.log(e);
+        var tempArray = e.data.split(",");
+        if($scope.chatroom._id === tempArray[1]){
+
+            $scope.members = eval("("+tempArray[0]+")");
+            $scope.membersByChatroom[tempArray[1]] = $scope.members;
+            $scope.$apply();
+        }
     };
 
     $scope.remove = function(chatroom) {
@@ -124,9 +130,8 @@ angular.module('chatapp.controllers.chatrooms', []).controller('ChatroomControll
             chatroomId: $stateParams.chatroomId
         }, function(chatroom) {
             $scope.chatroom = chatroom;
-            $scope.members = chatroom.members;
-            console.log(chatroom.members);
-            console.log($scope.chatroom.creator);
+            $scope.creator = chatroom.creator;
+            $scope.membersByChatroom[chatroom._id] = chatroom.members;
         });
     };
 
