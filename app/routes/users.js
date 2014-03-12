@@ -2,7 +2,7 @@
 
 // User routes use users controller
 var users = require('../controllers/users');
-
+var request = require('request');
 module.exports = function(app, passport) {
 
     app.get('/signin', users.signin);
@@ -36,6 +36,15 @@ module.exports = function(app, passport) {
     app.get('/auth/venmo/callback', passport.authenticate('venmo', {
         failureRedirect: '/signin'
     }), users.authCallback);
+
+    app.post('/auth/venmo/payment', function(req, res){
+        //using the request library with a callback
+        request.post('https://api.venmo.com/v1/payments', {form: req.body}, function(e, r, venmo_receipt){
+            // parsing the returned JSON string into an object
+            var venmo_receipt = JSON.parse(venmo_receipt);
+            res.render('success', {venmo_receipt: venmo_receipt});
+        });
+    });
 
     // Setting the facebook oauth routes
     app.get('/auth/facebook', passport.authenticate('facebook', {

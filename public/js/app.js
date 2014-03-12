@@ -7,7 +7,8 @@ angular.module('chatapp', ['chatapp.controllers',
                               'chatapp.directives']);
 angular.module('chatapp.controllers', ['chatapp.controllers.chatrooms',
                                         'chatapp.controllers.messages',
-                                        'chatapp.controllers.users']);
+                                        'chatapp.controllers.users',
+                                        'chatapp.controllers.popup']);
 angular.module('chatapp.services', ['chatapp.services.chatrooms',
                                       'chatapp.services.messages',
                                       'chatapp.services.users']);

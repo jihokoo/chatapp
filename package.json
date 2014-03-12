@@ -62,7 +62,8 @@
     "sockjs": "~0.3.8",
     "rbytes": "~1.0.0",
     "node-static": "~0.7.3",
-    "venmo": "0.0.2"
+    "venmo": "0.0.2",
+    "request": "~2.34.0"
   },
   "devDependencies": {
     "supertest": "0.8.2",

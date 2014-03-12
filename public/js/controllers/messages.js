@@ -38,7 +38,7 @@ angular.module('chatapp.controllers.messages', []).controller('MessagesControlle
         console.log('sockjs close');
     };
 
-    $scope.finds = function() {
+    $scope.findMessages = function() {
         var message = new Message({
             chatroomId: $stateParams.chatroomId
         })
