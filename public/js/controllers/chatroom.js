@@ -59,21 +59,14 @@ angular.module('chatapp.controllers.chatrooms', []).controller('ChatroomControll
 
     // $scope.temporary_members = [];
     $scope.removeUser = function(user, chatroomId) {
-        if (user) {
-            console.log(user);
-            console.log(chatroomId);
-            var userRemove = new User(user);
-            userRemove.chatroomId = chatroomId;
-            userRemove.$search(function(members){
-                $scope.temporary_members = members.members;
-                socks.send(["$scope.temporary_members", chatroomId]);
-            });
-        }
-        else {
-            console.log("errors on errors on errors")
-            // $scope.user.$remove();
-            // $location.path('user');
-        }
+        console.log(user);
+        console.log(chatroomId);
+        var userRemove = new User(user);
+        userRemove.chatroomId = chatroomId;
+        userRemove.$search(function(members){
+            $scope.temporary_members = members.members;
+            socks.send(["$scope.temporary_members", chatroomId]);
+        });
     };
 
     socks.onmessage = function(e) {

@@ -1,20 +1,19 @@
 <section >
-  <div class="col-md-3" style="height: 100%" data-ng-controller="ChatroomController" data-ng-init="find()">
-    <label for="groups" class="col-md-2 control-label">Groups</label>
-    <div class="row clearfix">.</div>
-    <div class="row clearfix">.</div>
-    <div class="row clearfix">.</div>
-    <ul class="chatrooms unstyled">
-      <span data-ng-repeat="chatroom in chatrooms" data-ng-show="checkMember(chatroom)">
-        <h5><a data-ng-href="#!/chatroom/{{chatroom._id}}" >{{chatroom.title}}</a></h5>
-        <!-- when clicked on switches the div -->
-      </span>
-    </ul>
-    <div class="row clearfix">.</div>
-    <div class="row clearfix">.</div>
-    <div class="row clearfix">.</div>
-    <div class="row clearfix">
-      <h5 data-ng-hide="!chatroom || chatroom.length">No chatrooms yet. <br> Why don't you <a href="/#!/chatroom/create">Create One</a>?</h5>
+  <div class="col-md-8 clearfix" style="height: 100%" data-ng-controller="ChatroomController" data-ng-init="find()">
+    <div style="margin-top: 20px" class="col-md-8" data-ng-show="!chatrooms || chatrooms.length > 0">
+      <div class="col-md-3">
+        <ul class="nav" style="margin-bottom: 15px;">
+          <li><a data-ng-repeat="chatroom in chatrooms" data-toggle="tab">{{chatroom.title}}</a></li>
+        </ul>
+      </div>
+      <div class="col-md-5">
+          <!-- create a tab type thing -->
+      </div>
     </div>
+
+    <div style="margin-top: 20px" class="col-md-8 col-md-offset-2" data-ng-hide="!chatrooms || chatrooms.length > 0">
+      <h5 style="text-align: center">No chatrooms yet... <br> Why don't you <a href="/#!/chatroom/create">Create One</a>?</h5>
+    </div>
+
   </div>
 </section>
