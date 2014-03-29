@@ -25,3 +25,30 @@ ul.articles li:not(:last-child) {
 #signin h1:hover{
   color: #b8d8ff;
 }
+
+
+.clean {
+  margin: 0px;
+  padding: 0px;
+}
+
+#chatroom {
+  border-color: #fff;
+}
+
+.chatroom-tab {
+  border-color: #fff;
+  color: #fff;
+  background-color: #0792ff;
+  font-weight: solid;
+  border-radius: 7px;
+}
+
+.chatroom-tab:hover{
+  font-weight: solid;
+  color: #0792ff;
+  background-color: #fff;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #0792ff;
+};
